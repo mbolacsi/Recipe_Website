@@ -10,7 +10,7 @@ TBD
 | Last Name          | First Name         | GitHub Username    |
 |--------------------|--------------------|--------------------|
 | Eagleton           | Aaron              | Aaron03115         |
-| Michael            | Olacsi             | mbolacs            |
+| Michael            | Olacsi             | mbolacsi           |
 | TBD                | TBD                | TBD                |
 | TBD                | TBD                | TBD                |
 | TBD                | TBD                | TBD                |
