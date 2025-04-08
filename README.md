@@ -12,7 +12,7 @@ TBD
 | Eagleton           | Aaron              | Aaron03115         |
 | Michael            | Olacsi             | mbolacsi           |
 | Caleb              | Corolewski         | caleb-corolewski   |
-| TBD                | TBD                | TBD                |
+| Leatherman         | Ty                 | tyleatherman       |
 | TBD                | TBD                | TBD                |
 | TBD                | TBD                | TBD                |
 
