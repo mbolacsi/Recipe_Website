@@ -4,10 +4,14 @@
 
 -- TODO: add your tables structure
 
-DROP TABLE IF EXISTS samples;
+DROP TABLE IF EXISTS recipes;
 
-CREATE TABLE samples
+CREATE TABLE recipes
 (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    tbd         VARCHAR(20)
+    title         VARCHAR(255),
+    contributor   VARCHAR(255),
+    category      VARCHAR(255),
+    instructions  VARCHAR(255)
+
 );
