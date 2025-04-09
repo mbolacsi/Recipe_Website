@@ -1,6 +1,6 @@
 ## Team Name: The Ghost Baguettes
 
-## Project Name: "Idiot Sandwich Recipes"
+## Project Name: Idiot Sandwich Recipes
 
 ## Project Description: We are making a recipe app.
 
