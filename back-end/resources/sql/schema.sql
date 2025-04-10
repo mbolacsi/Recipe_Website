@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS recipes;
 
 -- Create the recipes table
+DROP TABLE IF EXISTS recipes;
 CREATE TABLE recipes
 (
     id             INTEGER PRIMARY KEY AUTOINCREMENT,
