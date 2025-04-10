@@ -23,7 +23,7 @@ app.get('/', function (req, res)
 
 
 // The routes defined in ./routes/sample.js will be listened by the server
-app.use('/', require('./routes/sample'));
+app.use('/', require('./routes/recipes'));
 // TODO: add new routes here
 
 module.exports = app;

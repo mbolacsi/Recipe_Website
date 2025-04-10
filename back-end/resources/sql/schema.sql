@@ -1,13 +1,11 @@
--- Execute all SQL statements, in sequential order, from the top of this file
--- to create the tables or to "reset" the database to the expected structure
+DROP TABLE IF EXISTS recipes;
 
-
--- TODO: add your tables structure
-
-DROP TABLE IF EXISTS samples;
-
-CREATE TABLE samples
+-- Create the recipes table
+CREATE TABLE recipes
 (
-    id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    tbd         VARCHAR(20)
+    id             INTEGER PRIMARY KEY AUTOINCREMENT,
+    title          VARCHAR(100) NOT NULL,
+    contributor    VARCHAR(100) NOT NULL,
+    ingredients    TEXT NOT NULL,
+    instructions   TEXT NOT NULL
 );
