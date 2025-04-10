@@ -1,9 +1,8 @@
-## Team Name: TBD
+## Team Name: The Ghost Baguettes
 
-## Project Name: TBD
+## Project Name: Idiot Sandwich Recipes
 
-## Project Description:
-TBD
+## Project Description: We are making a recipe app.
 
 ## Team Members:
 
@@ -12,10 +11,7 @@ TBD
 | Eagleton           | Aaron              | Aaron03115         |
 | Michael            | Olacsi             | mbolacsi           |
 | Caleb              | Corolewski         | caleb-corolewski   |
-| TBD                | TBD                | TBD                |
-| TBD                | TBD                | TBD                |
-| TBD                | TBD                | TBD                |
-
+| Leatherman         | Ty                 | tyleatherman       |
 
 ## :eyes: :memo: Scrum Linter Reports:
 Access the [Scrum Linter Report](https://scrumlinter.boisestate.edu/CS208S25ScrumLinterReports/CS208-S25-Team1_fz9kbJVYNCa7BoyFA6NsLpTVUCn4pEpSNY89O0WS/). A new report will be automatically generated every few hours.
