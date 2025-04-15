@@ -1,20 +1,26 @@
 let express = require('express');
 let router = express.Router();
-const db = require("./../db"); // Import your database utility
+const db = require("./../db");
+
 
 /**
- * GET /recipes
- * Get a list of all recipes
- * @return {Array} List of recipes
+ * http://localhost:8080/recipes
+ * GET /samples
+ *
+ * @return a list of samples (extracted from the samples table in the database) as JSON
  */
-router.get("/recipes", async function (req, res) {
-    try {
-        const listOfRecipes = await db.getAllRecipes(); // Function to fetch all recipes from DB
-        console.log("listOfRecipes:", listOfRecipes);
+router.get("/recipes", async function (req, res)
+{
+    try
+    {
+        const listOfRecipes = await db.getAllRecipes();
+        console.log("listOfSamples:", listOfRecipes);
 
-        // Send the list of recipes as JSON
-        res.json(listOfRecipes);
-    } catch (err) {
+        // this automatically converts the array of samples to JSON and returns it to the client
+        res.send(listOfRecipes);
+    }
+    catch (err)
+    {
         console.error("Error:", err.message);
         res.status(500).json({ "error": "Internal Server Error" });
     }
@@ -22,109 +28,30 @@ router.get("/recipes", async function (req, res) {
 
 /**
  * GET /recipes/:id
- * Get a specific recipe by its ID
- * @param {number} id - The recipe's unique identifier
- * @return {Object} The recipe object
+ * http://localhost:8080/recipes/id
+ * Returns a single recipe by ID
  */
 router.get("/recipes/:id", async function (req, res) {
     try {
-        const recipeId = req.params.id;
-        const recipe = await db.getRecipeById(recipeId); // Fetch a specific recipe by ID
+        const id = req.params.id;
+        console.log("id = " + id);
 
-        if (recipe) {
-            res.json(recipe); // Return the recipe as JSON
-        } else {
-            res.status(404).json({ "error": "Recipe not found" });
+        const recipe_id = await db.getRecipeWithId(id);
+        console.log("recipeID:", recipe_id);
+
+        if (recipe_id == null) {
+            console.log("No recipe with id " + id + " exists.");
+
+            // return 404 status code (i.e., error that the recipe was not found)
+            res.status(404).json({"error": "recipe with id " + id + " not found"});
+            return;
         }
+
+        // this automatically converts the student object to JSON and returns it to the client
+        res.send(recipe_id);
     } catch (err) {
         console.error("Error:", err.message);
-        res.status(500).json({ "error": "Internal Server Error" });
-    }
-});
-
-/**
- * POST /recipes
- * Add a new recipe
- * @param {Object} body - The recipe details (title, contributor, ingredients, etc.)
- * @return {Object} The added recipe
- */
-router.post("/recipes", async function (req, res) {
-    try {
-        const { title, contributor, ingredients_and_instructions } = req.body;
-
-        if (!title || !contributor || !ingredients_and_instructions) {
-            return res.status(400).json({ "error": "Missing required fields" });
-        }
-
-        const newRecipe = {
-            title,
-            contributor,
-            ingredients_and_instructions
-        };
-
-        const addedRecipe = await db.addRecipe(newRecipe); // Insert the recipe into the DB
-
-        res.status(201).json(addedRecipe); // Return the added recipe with a 201 status
-    } catch (err) {
-        console.error("Error:", err.message);
-        res.status(500).json({ "error": "Internal Server Error" });
-    }
-});
-
-/**
- * PUT /recipes/:id
- * Update an existing recipe
- * @param {number} id - The recipe's unique identifier
- * @param {Object} body - The updated recipe details
- * @return {Object} The updated recipe
- */
-router.put("/recipes/:id", async function (req, res) {
-    try {
-        const recipeId = req.params.id;
-        const { title, contributor, ingredients_and_instructions } = req.body;
-
-        if (!title || !contributor || !ingredients_and_instructions) {
-            return res.status(400).json({ "error": "Missing required fields" });
-        }
-
-        const updatedRecipe = {
-            title,
-            contributor,
-            ingredients_and_instructions
-        };
-
-        const recipe = await db.updateRecipe(recipeId, updatedRecipe); // Update recipe in DB
-
-        if (recipe) {
-            res.json(recipe); // Return the updated recipe as JSON
-        } else {
-            res.status(404).json({ "error": "Recipe not found" });
-        }
-    } catch (err) {
-        console.error("Error:", err.message);
-        res.status(500).json({ "error": "Internal Server Error" });
-    }
-});
-
-/**
- * DELETE /recipes/:id
- * Delete a recipe by its ID
- * @param {number} id - The recipe's unique identifier
- * @return {Object} A confirmation message
- */
-router.delete("/recipes/:id", async function (req, res) {
-    try {
-        const recipeId = req.params.id;
-        const deletedRecipe = await db.deleteRecipe(recipeId); // Delete recipe from DB
-
-        if (deletedRecipe) {
-            res.json({ "message": "Recipe deleted successfully" });
-        } else {
-            res.status(404).json({ "error": "Recipe not found" });
-        }
-    } catch (err) {
-        console.error("Error:", err.message);
-        res.status(500).json({ "error": "Internal Server Error" });
+        res.status(500).json({"error": "Internal Server Error"});
     }
 });
 

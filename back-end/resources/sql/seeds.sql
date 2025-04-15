@@ -1,3 +1,7 @@
+-- Execute all SQL INSERT statements, in sequential order, from the top of this file
+-- to populate the tables with sample data
+
+
 -- Inserting data with the updated column order (category before contributor)
 INSERT INTO recipes (title, category, contributor, ingredients, instructions)
 VALUES

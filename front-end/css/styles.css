@@ -1,8 +1,161 @@
-/*
-Q: Can we create additional .css files in this folder?
-Absolutely, the team can create as many .css files as needed.
-*/
+/* Reset some common styling defaults */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+/* Body styling for a cyberpunk + rustic theme */
 body {
-    font: normal 10px Verdana, Arial, sans-serif;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    background-color: #1d1f20; /* Dark cyberpunk background */
+    color: #e0e0e0; /* Light gray text for readability */
+    margin: 0;
+    padding: 0;
+    text-align: center; /* Center content for home page */
+    transition: background-color 0.3s ease; /* Smooth background transition */
+}
+
+/* Headings with cyberpunk neons and rustic vintage */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Georgia', 'serif';
+    color: #ff00d4; /* Neon pink for a cyberpunk effect */
+    margin-bottom: 1rem;
+    font-weight: normal;
+    text-transform: capitalize;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Adds a glowing effect */
+}
+
+/* Global link styling with rustic + neon hover effect */
+a {
+    color: #5a9e6f; /* Muted rustic green */
+    text-decoration: none;
+    padding: 8px 20px; /* Makes the text appear button-like */
+    border: 2px solid #5a9e6f; /* Rustic green border */
+    border-radius: 5px; /* Rounded corners */
+    display: inline-block;
+    font-size: 1rem;
+    transition: all 0.3s ease; /* Smooth transition on hover */
+    font-weight: 600;
+}
+
+a:hover {
+    color: #fafafa; /* Light text on hover */
+    background-color: #ff00d4; /* Neon pink background on hover */
+    box-shadow: 0 4px 12px rgba(255, 0, 212, 0.4); /* Neon shadow */
+}
+
+/* Styling for navigation, ensuring a neat horizontal layout */
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav ul li {
+    margin: 0;
+}
+
+/* Section background with soft rustic tones and subtle cyberpunk edges */
+section {
+    background-color: #333; /* Dark, industrial background */
+    border: 2px solid #d1e4e2; /* Pastel rustic border */
+    padding: 2rem;
+    border-radius: 10px;
+    margin: 20px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7); /* Deep shadow for cyberpunk look */
+}
+
+/* Main page styling with a rustic-cyberpunk blend */
+main {
+    text-align: center;
+    padding: 20px;
+    background-color: #2e2e2e; /* Darker background with a rustic feel */
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Recipe list styling with a rugged, industrial touch */
+.recipe-list {
+    margin: 20px 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.recipe-list li {
+    margin: 15px 0;
+    font-size: 1.1rem;
+    color: #d1e4e2; /* Faded, rusty green text */
+    line-height: 1.8;
+    padding-left: 20px;
+    position: relative;
+    border-bottom: 1px solid #555; /* Subtle border for industrial feel */
+}
+
+.recipe-list li::before {
+    content: '🍳'; /* Food-related icon */
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 1.3rem;
+    margin-top: 5px;
+    color: #ff00d4; /* Neon color for contrast */
+}
+
+/* Recipe card layout with rustic texture and cyberpunk elements */
+.recipe-card {
+    background-color: #444;
+    border: 1px solid #666;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6); /* Cyberpunk industrial shadows */
+    padding: 20px;
+    margin-bottom: 20px;
+    background-image: url('https://www.transparenttextures.com/patterns/old-wall-3.png'); /* Rustic texture */
+}
+
+.recipe-card img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+/* Recipes page left-aligned content */
+.recipes-page main {
+    text-align: left;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Responsive design: adjusting for smaller screens */
+@media (max-width: 768px) {
+    body {
+        font-size: 0.9rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.6rem;
+    }
+
+    .recipe-list li {
+        font-size: 1rem;
+    }
+
+    a {
+        padding: 8px 15px;
+    }
+
+    .recipe-card {
+        padding: 15px;
+    }
 }

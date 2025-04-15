@@ -66,64 +66,76 @@ else
     });
 }
 
-function getAllRecipes()
-{
-    return new Promise(function(resolve, reject)
-    {
-        db.serialize(function()
-        {
-            // Updated SQL query to include the category
-            const sql = `
-                SELECT id, title, category, contributor, ingredients, instructions
-                FROM recipes;
-            `;
 
-            let listOfRecipes = []; // initialize an empty array
+// Function to fetch all recipes
+function getAllRecipes() {
+    return new Promise((resolve, reject) => {
+        const sql = `SELECT id, title, category, contributor, ingredients, instructions FROM recipes;`;
+        let listOfRecipes = [];
 
-            // print table header, now including category
-            printTableHeader(["id", "title", "contributor", "ingredients", "instructions", "category"]);
+        // Print table header for the recipes table
+        printTableHeader(["id", "title", "category", "contributor", "ingredients", "instructions"]);
 
-            const callbackToProcessEachRow = function(err, row)
-            {
-                if (err)
-                {
-                    reject(err);
-                }
+        db.each(sql, (err, row) => {
+            if (err) {
+                return reject(err);
+            }
 
-                // extract the values from the current row, including category
-                const id = row.id;
-                const title = row.title;
-                const category = row.category;
-                const contributor = row.contributor;
-                const ingredients = row.ingredients;
-                const instructions = row.instructions;
-
-                // print the results of the current row, including category
-                console.log(util.format("| %d | %s | %s | %s | %s | %s | %s |", id, title, category, contributor, ingredients, instructions));
-
-                const sampleForCurrentRow = {
-                    id: id,
-                    title: title,
-                    category: category,
-                    contributor: contributor,
-                    ingredients: ingredients,
-                    instructions: instructions
-                };
-
-                // add a new element sampleForCurrentRow to the array
-                listOfRecipes.push(sampleForCurrentRow);
+            const recipe = {
+                id: row.id,
+                title: row.title,
+                category: row.category,
+                contributor: row.contributor,
+                ingredients: row.ingredients,
+                instructions: row.instructions
             };
 
-            const callbackAfterAllRowsAreProcessed = function()
-            {
-                resolve(listOfRecipes);
-            };
+            // Log the row in a table-like format
+            console.log(util.format("| %d | %s | %s | %s | %s | %s |", recipe.id, recipe.title, recipe.category, recipe.contributor, recipe.ingredients, recipe.instructions));
 
-            db.each(sql, callbackToProcessEachRow, callbackAfterAllRowsAreProcessed);
+            listOfRecipes.push(recipe);
+        }, () => {
+            resolve(listOfRecipes);
         });
     });
 }
 
+function getRecipeWithId(id) {
+    return new Promise(function (resolve, reject) {
+        db.serialize(function () {
+            const sql =
+                `SELECT id, title, category, contributor, ingredients, instructions
+                 FROM recipes
+                 WHERE id = ?;`;
+
+            function callbackAfterReturnedRowIsProcessed(err, row) {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+
+                if (!row) {
+                    resolve(null);  // No recipe found with this id
+                    return;
+                }
+
+                const recipe = {
+                    id: row.id,
+                    title: row.title,
+                    category: row.category,
+                    contributor: row.contributor,
+                    ingredients: row.ingredients,
+                    instructions: row.instructions
+                };
+
+                console.log("Fetched recipe:", recipe);
+                resolve(recipe);
+            }
+
+            db.get(sql, [id], callbackAfterReturnedRowIsProcessed);
+        });
+    });
+}
 
 function printTableHeader(listOfColumnNames)
 {
@@ -140,5 +152,6 @@ function printTableHeader(listOfColumnNames)
 // TODO: export the functions that will be used in other files
 // these functions will be available from other files that import this module
 module.exports = {
-    getAllSamples,
+    getAllRecipes,
+    getRecipeWithId,
 };

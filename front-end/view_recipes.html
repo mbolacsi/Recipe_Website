@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
-<body>
+<body class="recipes-page">
 <header>
     <h1>View Recipes</h1>
     <nav>
@@ -20,17 +20,13 @@
 <main>
     <section id="recipe-list">
         <h2>All Recipes</h2>
-        <p>No recipes yet. Check back soon!</p>
-        <!-- Example of how recipes could be listed statically:
-        <ul>
-            <li><a href="recipe-detail.html?id=1">Spaghetti Carbonara</a></li>
-            <li><a href="recipe-detail.html?id=2">Classic Pancakes</a></li>
-        </ul>
-        -->
+        <div id="list_of_recipes">
+            <!-- The recipes returned from the API call will be displayed here -->
+        </div>
     </section>
 </main>
 
-<script src="js/get_recipes.js"></script>
+<script src="js/view_recipes.js"></script>
 </body>
 
 </html>

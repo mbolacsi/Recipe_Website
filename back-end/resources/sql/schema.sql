@@ -1,3 +1,6 @@
+-- Execute all SQL statements, in sequential order, from the top of this file
+-- to create the tables or to "reset" the database to the expected structure
+
 DROP TABLE IF EXISTS recipes;
 
 -- Create the recipes table
