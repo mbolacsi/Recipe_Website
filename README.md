@@ -1,9 +1,8 @@
-## Team Name: TBD
+## Team Name: The Ghost Baguettes
 
-## Project Name: TBD
+## Project Name: Idiot Sandwich Recipes
 
-## Project Description:
-TBD
+## Project Description: We are making a recipe app.
 
 ## Team Members:
 
