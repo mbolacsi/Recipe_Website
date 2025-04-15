@@ -16,3 +16,17 @@ VALUES
     ('Smashed Chicken Parmesan Texas Toast', 'Main Course', 'Nicole McLaughlin', 'ground chicken, salt, pepper, garlic powder, Italian seasoning, red pepper, Parmesan cheese, frozen garlic Texas toast, olive oil, marinara sauce, mozzarella cheese', 'Combine ground chicken and seasonings, spread on Texas toast, cook in skillet, top with marinara and mozzarella. Bake until golden and melted.'),
     ('Cherry Cheesecake Dump Cake', 'Dessert', 'Nicole McLaughlin', 'cherry pie filling, cream cheese, egg, white sugar, vanilla cake mix, butter', 'Preheat the oven to 350°F. Layer pie filling, cream cheese mixture, and cake mix in a dish, pour butter over top, and bake until golden and bubbly. Let cool before serving.')
 ;
+
+-- Five new recipes to add to database
+INSERT INTO recipes (title, category, contributor, ingredients, instructions)
+VALUES
+    ('Authentic Spaghetti Carbonara', 'Main Course', 'Food Network', 'spaghetti, pancetta, eggs, Parmesan cheese, black pepper, salt, parsley', 'Bring a large pot of salted water to a boil and cook spaghetti until al dente. Meanwhile, cook pancetta in a skillet until crisp. In a bowl, whisk eggs, cheese, and pepper. Drain pasta, reserving some water. Add hot pasta to pancetta, remove from heat, then quickly stir in egg mixture until it thickens but doesn''t scramble. Thin with pasta water if needed. Season with salt and garnish with parsley.'),
+
+    ('Chicken Tikka Masala', 'Main Course', 'Allrecipes', 'boneless chicken, yogurt, lemon juice, cumin, cinnamon, cayenne, ginger, garlic, tomato sauce, heavy cream, cilantro, garam masala', 'Marinate chicken in yogurt, lemon juice, and spices for at least 1 hour. Grill or pan-cook chicken until nearly done. In a large pan, sauté onions, add more spices, then add tomato sauce. Add grilled chicken and simmer. Finish with heavy cream and cilantro. Serve hot with rice or naan bread.'),
+
+    ('Classic Apple Crumble', 'Dessert', 'Taste of Home', 'apples, sugar, cinnamon, nutmeg, lemon juice, flour, brown sugar, butter, oats, salt', 'Preheat oven to 375°F. Toss sliced apples with sugar, cinnamon, nutmeg, and lemon juice in a baking dish. For topping, combine flour, brown sugar, butter, oats, and salt until crumbly. Sprinkle topping over apples and bake for 35-40 minutes until golden and bubbly. Serve warm with ice cream.'),
+
+    ('Gingerbread Cookies', 'Dessert', 'Sally''s Baking Addiction', 'flour, baking soda, ginger, cinnamon, cloves, nutmeg, salt, butter, brown sugar, molasses, egg, vanilla', 'In a bowl, whisk flour, baking soda, and spices. In another bowl, beat butter and brown sugar until fluffy, then add molasses, egg, and vanilla. Gradually mix in dry ingredients. Chill dough for at least 3 hours. Roll dough to 1/4-inch thickness, cut shapes, and bake at 350°F for 8-10 minutes. Cool completely before decorating.'),
+
+    ('Easy Vegetable Stir Fry', 'Main Course', 'Gimme Some Oven', 'broccoli, carrots, bell peppers, snow peas, mushrooms, garlic, ginger, soy sauce, sesame oil, cornstarch, brown sugar, rice vinegar, sriracha', 'Prepare sauce by mixing soy sauce, sesame oil, cornstarch, brown sugar, rice vinegar, and sriracha. Heat oil in a wok or large skillet over high heat. Add vegetables in order of cooking time (harder vegetables first). Add minced garlic and ginger. Pour sauce over vegetables and cook until thickened. Serve hot over rice or noodles.')
+;
