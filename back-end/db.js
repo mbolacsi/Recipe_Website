@@ -67,56 +67,75 @@ else
 }
 
 
-function getAllSamples()
-{
-    return new Promise(function(resolve, reject)
-    {
-        db.serialize(function()
-        {
-            // note the backticks ` which allow us to write a multiline string
-            const sql =
-                `SELECT id, tbd 
-                 FROM samples;`;
+// Function to fetch all recipes
+function getAllRecipes() {
+    return new Promise((resolve, reject) => {
+        const sql = `SELECT id, title, category, contributor, ingredients, instructions FROM recipes;`;
+        let listOfRecipes = [];
 
-            let listOfSamples = []; // initialize an empty array
+        // Print table header for the recipes table
+        printTableHeader(["id", "title", "category", "contributor", "ingredients", "instructions"]);
 
-            // print table header
-            printTableHeader(["id", "tbd"]);
+        db.each(sql, (err, row) => {
+            if (err) {
+                return reject(err);
+            }
 
-            const callbackToProcessEachRow = function(err, row)
-            {
-                if (err)
-                {
-                    reject(err);
-                }
-
-                // extract the values from the current row
-                const id = row.id;
-                const tbd = row.tbd;
-
-                // print the results of the current row
-                console.log(util.format("| %d | %s |", id, tbd));
-
-                const sampleForCurrentRow = {
-                    id: id,
-                    tbd: tbd
-                };
-
-                // add a new element sampleForCurrentRow to the array
-                listOfSamples.push(sampleForCurrentRow);
+            const recipe = {
+                id: row.id,
+                title: row.title,
+                category: row.category,
+                contributor: row.contributor,
+                ingredients: row.ingredients,
+                instructions: row.instructions
             };
 
-            const callbackAfterAllRowsAreProcessed = function()
-            {
-                resolve(listOfSamples);
-            };
+            // Log the row in a table-like format
+            console.log(util.format("| %d | %s | %s | %s | %s | %s |", recipe.id, recipe.title, recipe.category, recipe.contributor, recipe.ingredients, recipe.instructions));
 
-            db.each(sql, callbackToProcessEachRow, callbackAfterAllRowsAreProcessed);
+            listOfRecipes.push(recipe);
+        }, () => {
+            resolve(listOfRecipes);
         });
     });
 }
 
+function getRecipeWithId(id) {
+    return new Promise(function (resolve, reject) {
+        db.serialize(function () {
+            const sql =
+                `SELECT id, title, category, contributor, ingredients, instructions
+                 FROM recipes
+                 WHERE id = ?;`;
 
+            function callbackAfterReturnedRowIsProcessed(err, row) {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+
+                if (!row) {
+                    resolve(null);  // No recipe found with this id
+                    return;
+                }
+
+                const recipe = {
+                    id: row.id,
+                    title: row.title,
+                    category: row.category,
+                    contributor: row.contributor,
+                    ingredients: row.ingredients,
+                    instructions: row.instructions
+                };
+
+                console.log("Fetched recipe:", recipe);
+                resolve(recipe);
+            }
+
+            db.get(sql, [id], callbackAfterReturnedRowIsProcessed);
+        });
+    });
+}
 
 function printTableHeader(listOfColumnNames)
 {
@@ -133,5 +152,6 @@ function printTableHeader(listOfColumnNames)
 // TODO: export the functions that will be used in other files
 // these functions will be available from other files that import this module
 module.exports = {
-    getAllSamples,
+    getAllRecipes,
+    getRecipeWithId,
 };

@@ -2,10 +2,17 @@
 -- to populate the tables with sample data
 
 
--- TODO: Insert some sample rows to populate the tables
-INSERT INTO samples(id, tbd)
+-- Inserting data with the updated column order (category before contributor)
+INSERT INTO recipes (title, category, contributor, ingredients, instructions)
 VALUES
-    (1, 'value1'),
-    (2, 'value2'),
-    (3, 'value3'),
-    (4, 'value4');
+    ('Spaghetti Bolognese', 'Main Course', 'Alice', 'spaghetti, ground beef, tomato sauce, onions, garlic', 'Boil spaghetti, cook beef with onions and garlic, mix with sauce, serve with spaghetti.'),
+    ('Blueberry Pancakes', 'Breakfast', 'Bob', 'flour, sugar, milk, eggs, blueberries', 'Mix dry ingredients, add milk and eggs, fold in blueberries, cook on griddle.'),
+    ('Chicken Curry', 'Main Course', 'Carlos', 'chicken, coconut milk, curry powder, onions, garlic', 'Brown chicken, sauté onions and garlic, add curry powder and coconut milk, simmer until cooked.'),
+    ('Vegetable Stir Fry', 'Main Course', 'Dana', 'broccoli, carrots, bell peppers, soy sauce, garlic', 'Stir fry vegetables in hot oil, add soy sauce and garlic, cook until tender.'),
+    ('Chocolate Chip Cookies', 'Dessert', 'Evelyn', 'flour, sugar, butter, chocolate chips, eggs', 'Mix ingredients, spoon onto baking sheet, bake at 350°F for 10 minutes.'),
+    ('Sausage, Egg, and Cheese Biscuit Casserole', 'Breakfast', 'Kathryn Hendrix', '1 (16.3 ounce) can refrigerated biscuits (such as Pillsbury Grands! Original), 1 pound bulk pork sausage, 1 1/2 cups shredded Cheddar cheese, 8 large eggs, 1 cup milk, 1/2 teaspoon salt, 1/2 teaspoon ground black pepper', 'Preheat the oven to 425 degrees F (220 degrees C). Grease a 9x13-inch baking dish. Line prepared baking dish with the biscuits, pressing to form an even layer. Bake in the preheated oven until puffed and lightly browned, about 8 minutes. Reduce oven temperature to 375 degrees F (190 degrees C). (Leave the oven door open for a bit to let the oven cool down.) Meanwhile, heat a large skillet over medium-high heat. Add sausage to skillet; cook and stir until fully cooked and browned, about 10 minutes; drain fat. Sprinkle cooked sausage and cheese evenly over baked biscuits. Whisk together eggs, milk, salt, and pepper in a large bowl. Pour egg mixture over sausage and cheese. (The egg mixture won’t cover the cheese and sausage at this point, but will expand as it bakes.) Bake until casserole is set and internal temperature registers 165 degrees F (74 degrees C), about 25 minutes. Enjoy'),
+    ('Ultimate Potato Soup', 'Soup', 'allrecipes.com', 'bacon, celery, onion, garlic, potatoes, chicken stock, butter, heavy cream, tarragon, cilantro', 'Cook bacon in a Dutch oven until crispy. Drain bacon and cook vegetables in the remaining grease. Add potatoes, return bacon, cover with stock, and simmer. In a separate skillet, cook butter and flour, add heavy cream and herbs. Combine both mixtures and blend half of the soup. Serve with toppings like crumbled bacon or shredded cheddar cheese.'),
+    ('Rotisserie Chicken Bake', 'Main Course', 'The Daily Gourmet', 'high protein pasta, broccoli, rotisserie chicken, Parmesan cheese, cottage cheese, milk, cream cheese, garlic, herbs, mozzarella cheese', 'Preheat the oven to 375°F. Cook pasta and broccoli. Blend Parmesan with cottage cheese, milk, and cream cheese. Combine with pasta, chicken, and cheese, bake for 30 minutes until bubbly.'),
+    ('Smashed Chicken Parmesan Texas Toast', 'Main Course', 'Nicole McLaughlin', 'ground chicken, salt, pepper, garlic powder, Italian seasoning, red pepper, Parmesan cheese, frozen garlic Texas toast, olive oil, marinara sauce, mozzarella cheese', 'Combine ground chicken and seasonings, spread on Texas toast, cook in skillet, top with marinara and mozzarella. Bake until golden and melted.'),
+    ('Cherry Cheesecake Dump Cake', 'Dessert', 'Nicole McLaughlin', 'cherry pie filling, cream cheese, egg, white sugar, vanilla cake mix, butter', 'Preheat the oven to 350°F. Layer pie filling, cream cheese mixture, and cake mix in a dish, pour butter over top, and bake until golden and bubbly. Let cool before serving.')
+;
