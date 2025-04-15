@@ -66,22 +66,22 @@ else
     });
 }
 
-
-function getAllSamples()
+function getAllRecipes()
 {
     return new Promise(function(resolve, reject)
     {
         db.serialize(function()
         {
-            // note the backticks ` which allow us to write a multiline string
-            const sql =
-                `SELECT id, tbd 
-                 FROM samples;`;
+            // Updated SQL query to include the category
+            const sql = `
+                SELECT id, title, category, contributor, ingredients, instructions
+                FROM recipes;
+            `;
 
-            let listOfSamples = []; // initialize an empty array
+            let listOfRecipes = []; // initialize an empty array
 
-            // print table header
-            printTableHeader(["id", "tbd"]);
+            // print table header, now including category
+            printTableHeader(["id", "title", "contributor", "ingredients", "instructions", "category"]);
 
             const callbackToProcessEachRow = function(err, row)
             {
@@ -90,32 +90,39 @@ function getAllSamples()
                     reject(err);
                 }
 
-                // extract the values from the current row
+                // extract the values from the current row, including category
                 const id = row.id;
-                const tbd = row.tbd;
+                const title = row.title;
+                const category = row.category;
+                const contributor = row.contributor;
+                const ingredients = row.ingredients;
+                const instructions = row.instructions;
 
-                // print the results of the current row
-                console.log(util.format("| %d | %s |", id, tbd));
+                // print the results of the current row, including category
+                console.log(util.format("| %d | %s | %s | %s | %s | %s | %s |", id, title, category, contributor, ingredients, instructions));
 
                 const sampleForCurrentRow = {
                     id: id,
-                    tbd: tbd
+                    title: title,
+                    category: category,
+                    contributor: contributor,
+                    ingredients: ingredients,
+                    instructions: instructions
                 };
 
                 // add a new element sampleForCurrentRow to the array
-                listOfSamples.push(sampleForCurrentRow);
+                listOfRecipes.push(sampleForCurrentRow);
             };
 
             const callbackAfterAllRowsAreProcessed = function()
             {
-                resolve(listOfSamples);
+                resolve(listOfRecipes);
             };
 
             db.each(sql, callbackToProcessEachRow, callbackAfterAllRowsAreProcessed);
         });
     });
 }
-
 
 
 function printTableHeader(listOfColumnNames)
