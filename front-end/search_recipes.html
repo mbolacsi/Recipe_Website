@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Search Recipes | My Recipe Book</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+<header>
+  <h1>Search Recipes</h1>
+  <nav>
+    <a href="index.html">← Back to Home</a>
+  </nav>
+</header>
+
+<main>
+  <section id="search-section">
+    <div class="search-container">
+      <div class="search-box">
+        <input type="text" id="search-input" placeholder="Search by recipe name...">
+        <button id="search-button">Search</button>
+      </div>
+
+      <div class="category-filter">
+        <label for="category-select">Filter by Category:</label>
+        <select id="category-select">
+          <option value="">All Categories</option>
+          <!-- Categories will be loaded dynamically -->
+        </select>
+      </div>
+    </div>
+
+    <div id="search-results">
+      <!-- Search results will be displayed here -->
+      <p id="initial-message">Please enter a search term or select a category.</p>
+    </div>
+  </section>
+</main>
+
+<script src="js/search_recipes.js"></script>
+</body>
+
+</html>
