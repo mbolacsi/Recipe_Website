@@ -10,12 +10,9 @@ TBD
 | Last Name          | First Name         | GitHub Username    |
 |--------------------|--------------------|--------------------|
 | Eagleton           | Aaron              | Aaron03115         |
-| Michael            | Olacsi             | mbolacs            |
-| TBD                | TBD                | TBD                |
-| TBD                | TBD                | TBD                |
-| TBD                | TBD                | TBD                |
-| TBD                | TBD                | TBD                |
-
+| Michael            | Olacsi             | mbolacsi           |
+| Caleb              | Corolewski         | caleb-corolewski   |
+| Leatherman         | Ty                 | tyleatherman       |
 
 ## :eyes: :memo: Scrum Linter Reports:
 Access the [Scrum Linter Report](https://scrumlinter.boisestate.edu/CS208S25ScrumLinterReports/CS208-S25-Team1_fz9kbJVYNCa7BoyFA6NsLpTVUCn4pEpSNY89O0WS/). A new report will be automatically generated every few hours.
