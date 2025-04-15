@@ -148,10 +148,95 @@ function printTableHeader(listOfColumnNames)
     console.log("-".repeat(80));
 }
 
+// Add these functions to your db.js file
+function searchRecipesByTitle(searchTerm) {
+    return new Promise((resolve, reject) => {
+        const sql = `SELECT id, title, category, contributor, ingredients, instructions 
+                     FROM recipes 
+                     WHERE title LIKE ? 
+                     ORDER BY title;`;
+        const params = [`%${searchTerm}%`];
+
+        let listOfRecipes = [];
+
+        db.each(sql, params, (err, row) => {
+            if (err) {
+                return reject(err);
+            }
+
+            const recipe = {
+                id: row.id,
+                title: row.title,
+                category: row.category,
+                contributor: row.contributor,
+                ingredients: row.ingredients,
+                instructions: row.instructions
+            };
+
+            listOfRecipes.push(recipe);
+        }, () => {
+            resolve(listOfRecipes);
+        });
+    });
+}
+
+function getRecipesByCategory(category) {
+    return new Promise((resolve, reject) => {
+        const sql = `SELECT id, title, category, contributor, ingredients, instructions 
+                     FROM recipes 
+                     WHERE category = ? 
+                     ORDER BY title;`;
+        const params = [category];
+
+        let listOfRecipes = [];
+
+        db.each(sql, params, (err, row) => {
+            if (err) {
+                return reject(err);
+            }
+
+            const recipe = {
+                id: row.id,
+                title: row.title,
+                category: row.category,
+                contributor: row.contributor,
+                ingredients: row.ingredients,
+                instructions: row.instructions
+            };
+
+            listOfRecipes.push(recipe);
+        }, () => {
+            resolve(listOfRecipes);
+        });
+    });
+}
+
+function getAllCategories() {
+    return new Promise((resolve, reject) => {
+        const sql = `SELECT DISTINCT category FROM recipes ORDER BY category;`;
+
+        let categories = [];
+
+        db.each(sql, (err, row) => {
+            if (err) {
+                return reject(err);
+            }
+
+            categories.push(row.category);
+        }, () => {
+            resolve(categories);
+        });
+    });
+}
+
 
 // TODO: export the functions that will be used in other files
 // these functions will be available from other files that import this module
 module.exports = {
     getAllRecipes,
     getRecipeWithId,
+    searchRecipesByTitle,
+    getRecipesByCategory,
+    getAllCategories,
+
 };
