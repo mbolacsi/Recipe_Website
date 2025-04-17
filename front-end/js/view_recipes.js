@@ -1,28 +1,54 @@
 console.log('view_recipes.js is executing...');
 
 const div_list_of_recipes = document.getElementById("list_of_recipes");
+const searchInput = document.getElementById("search-input");
+const searchButton = document.getElementById("search-button");
+const categorySelect = document.getElementById("category-select");
 
+let allRecipes = [];
+
+// On page load
+document.addEventListener("DOMContentLoaded", () => {
+    loadCategories();
+    getAndDisplayAllRecipes();
+
+    // Event listeners
+    searchButton.addEventListener("click", filterRecipes);
+    searchInput.addEventListener("keypress", e => {
+        if (e.key === "Enter") filterRecipes();
+    });
+    categorySelect.addEventListener("change", filterRecipes);
+});
+
+// Load all categories into dropdown
+function loadCategories() {
+    fetch("http://localhost:8080/categories")
+        .then(res => res.json())
+        .then(categories => {
+            categories.forEach(category => {
+                const option = document.createElement("option");
+                option.value = category;
+                option.textContent = category;
+                categorySelect.appendChild(option);
+            });
+        })
+        .catch(err => console.error("Error loading categories:", err));
+}
+
+// Fetch all recipes
 async function getAndDisplayAllRecipes() {
-    console.log('getAndDisplayAllRecipes - START');
+    console.log("getAndDisplayAllRecipes - START");
 
-    const API_URL = "http://localhost:8080/recipes";  // Endpoint to get all recipes
+    const API_URL = "http://localhost:8080/recipes";
 
     div_list_of_recipes.innerHTML = "Calling the API to get the list of recipes...";
 
     try {
         const response = await fetch(API_URL);
-        console.log({ response });
-        console.log(`response.status = ${response.status}`);
-        console.log(`response.statusText = ${response.statusText}`);
-        console.log(`response.ok = ${response.ok}`);
-
         if (response.ok) {
-            div_list_of_recipes.innerHTML = "Retrieved the recipes successfully, now we just need to process them...";
-
-            const listOfRecipesAsJSON = await response.json();
-            console.log({ listOfRecipes: listOfRecipesAsJSON });
-
-            displayRecipes(listOfRecipesAsJSON);
+            const data = await response.json();
+            allRecipes = data;
+            displayRecipes(allRecipes);
         } else {
             div_list_of_recipes.innerHTML = '<p class="failure">ERROR: failed to retrieve the recipes.</p>';
         }
@@ -31,27 +57,45 @@ async function getAndDisplayAllRecipes() {
         div_list_of_recipes.innerHTML = '<p class="failure">ERROR: failed to connect to the API to fetch the recipes data.</p>';
     }
 
-    console.log('getAndDisplayAllRecipes - END');
+    console.log("getAndDisplayAllRecipes - END");
 }
 
-function displayRecipes(listOfRecipesAsJSON) {
-    div_list_of_recipes.innerHTML = '';  // Clear any existing content
+// Filter recipes based on search/category
+function filterRecipes() {
+    const searchTerm = searchInput.value.trim().toLowerCase();
+    const selectedCategory = categorySelect.value;
 
-    if (listOfRecipesAsJSON.length === 0) {
-        div_list_of_recipes.innerHTML = '<p>No recipes available.</p>';
+    let filtered = allRecipes;
+
+    if (searchTerm) {
+        filtered = filtered.filter(recipe =>
+            recipe.title.toLowerCase().includes(searchTerm)
+        );
+    }
+
+    if (selectedCategory) {
+        filtered = filtered.filter(recipe => recipe.category === selectedCategory);
+    }
+
+    displayRecipes(filtered);
+}
+
+// Display recipe list
+function displayRecipes(recipes) {
+    div_list_of_recipes.innerHTML = "";
+
+    if (recipes.length === 0) {
+        div_list_of_recipes.innerHTML = "<p>No recipes found.</p>";
         return;
     }
 
-    const ul = document.createElement('ul');
-    for (const recipe of listOfRecipesAsJSON) {
-        console.log({ recipe });
-        const li = document.createElement('li');
+    const ul = document.createElement("ul");
+
+    recipes.forEach(recipe => {
+        const li = document.createElement("li");
         li.innerHTML = `<a href="recipe-detail.html?id=${recipe.id}">${recipe.title}</a>`;
         ul.appendChild(li);
-    }
+    });
 
     div_list_of_recipes.appendChild(ul);
 }
-
-// Call the function to fetch and display recipes on page load
-getAndDisplayAllRecipes();

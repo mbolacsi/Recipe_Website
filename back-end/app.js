@@ -24,9 +24,5 @@ app.get('/', function (req, res)
 
 // The routes defined in ./routes/sample.js will be listened by the server
 app.use('/', require('./routes/recipes'));
-// TODO: add new routes here
-
-//search function for category and title
-app.use('/', require('./routes/search'));
 
 module.exports = app;

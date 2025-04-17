@@ -2,11 +2,11 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>View Recipes | My Recipe Book</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css" />
 </head>
 
 <body class="recipes-page">
@@ -18,10 +18,38 @@
 </header>
 
 <main>
+    <!-- Search and Category Filter -->
+    <section id="search-section">
+        <div class="search-container">
+            <div class="search-box">
+                <input
+                        type="text"
+                        id="search-input"
+                        placeholder="Search by recipe name..."
+                />
+                <button id="search-button">Search</button>
+            </div>
+
+            <div class="category-filter">
+                <label for="category-select">Filter by Category:</label>
+                <select id="category-select">
+                    <option value="">All Categories</option>
+                    <option value="Breakfast">Breakfast</option>
+                    <option value="Lunch">Lunch</option>
+                    <option value="Dinner">Dinner</option>
+                    <option value="Dessert">Dessert</option>
+                    <!-- Add more if needed -->
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recipe List -->
     <section id="recipe-list">
         <h2>All Recipes</h2>
         <div id="list_of_recipes">
-            <!-- The recipes returned from the API call will be displayed here -->
+            <!-- Recipes will be dynamically loaded here -->
+            <p>Loading recipes...</p>
         </div>
     </section>
 </main>
