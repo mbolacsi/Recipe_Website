@@ -96,7 +96,7 @@ function displayRecipes(recipes) {
 
     recipes.forEach(recipe => {
         const li = document.createElement("li");
-        li.innerHTML = `<a href="recipe-detail.html?id=${recipe.id}">${recipe.title}</a>`;
+        li.innerHTML = `<a href="recipe_detail.html?id=${recipe.id}">${recipe.title}</a>`;
         ul.appendChild(li);
     });
 

@@ -89,6 +89,16 @@ async function getAllRecipes() {
     return await runQueryEach(sql);
 }
 
+async function getRecipeById(id) {
+    const sql = `
+        SELECT id, title, category, contributor, ingredients, instructions
+        FROM recipes
+        WHERE id = ?;
+    `;
+    const results = await runQueryEach(sql, [id]);
+    return results[0]; // Return single recipe or undefined
+}
+
 async function searchRecipesByTitle(searchTerm) {
     const sql = `
         SELECT id, title, category, contributor, ingredients, instructions
@@ -118,6 +128,7 @@ async function getAllCategoryNames() {
 // these functions will be available from other files that import this module
 module.exports = {
     getAllRecipes,
+    getRecipeById,
     searchRecipesByTitle,
     getRecipesByCategory,
     getAllCategoryNames,

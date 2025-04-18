@@ -79,4 +79,25 @@ router.get("/category/:categoryName", async function (req, res) {
     }
 });
 
+/**
+ * GET /recipes/:id
+ * Get a single recipe by ID
+ */
+router.get("/recipe_detail/:id", async function (req, res) {
+    try {
+        const recipeId = req.params.id;
+
+        const recipe = await db.getRecipeById(recipeId);
+
+        if (recipe) {
+            res.send(recipe);
+        } else {
+            res.status(404).json({ error: "Recipe not found" });
+        }
+    } catch (err) {
+        console.error("Error:", err.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
 module.exports = router;
