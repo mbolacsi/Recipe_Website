@@ -66,177 +66,59 @@ else
     });
 }
 
-
-// Function to fetch all recipes
-function getAllRecipes() {
+/**
+ * Executes a SQLite query using `db.each`, collecting all rows into an array.
+ * This function is useful for SELECT queries that return multiple rows.
+ * It wraps the `db.each` method in a Promise, making it easier to use with async/await.
+ *
+ * @example
+ * const rows = await runQueryEach("SELECT * FROM recipes WHERE category = ?", ["Dessert"]);
+ */
+function runQueryEach(sql, params = []) {
     return new Promise((resolve, reject) => {
-        const sql = `SELECT id, title, category, contributor, ingredients, instructions FROM recipes;`;
-        let listOfRecipes = [];
-
-        // Print table header for the recipes table
-        printTableHeader(["id", "title", "category", "contributor", "ingredients", "instructions"]);
-
-        db.each(sql, (err, row) => {
-            if (err) {
-                return reject(err);
-            }
-
-            const recipe = {
-                id: row.id,
-                title: row.title,
-                category: row.category,
-                contributor: row.contributor,
-                ingredients: row.ingredients,
-                instructions: row.instructions
-            };
-
-            // Log the row in a table-like format
-            console.log(util.format("| %d | %s | %s | %s | %s | %s |", recipe.id, recipe.title, recipe.category, recipe.contributor, recipe.ingredients, recipe.instructions));
-
-            listOfRecipes.push(recipe);
-        }, () => {
-            resolve(listOfRecipes);
-        });
-    });
-}
-
-function getRecipeWithId(id) {
-    return new Promise(function (resolve, reject) {
-        db.serialize(function () {
-            const sql =
-                `SELECT id, title, category, contributor, ingredients, instructions
-                 FROM recipes
-                 WHERE id = ?;`;
-
-            function callbackAfterReturnedRowIsProcessed(err, row) {
-                if (err) {
-                    reject(err);
-                    return;
-                }
-
-                if (!row) {
-                    resolve(null);  // No recipe found with this id
-                    return;
-                }
-
-                const recipe = {
-                    id: row.id,
-                    title: row.title,
-                    category: row.category,
-                    contributor: row.contributor,
-                    ingredients: row.ingredients,
-                    instructions: row.instructions
-                };
-
-                console.log("Fetched recipe:", recipe);
-                resolve(recipe);
-            }
-
-            db.get(sql, [id], callbackAfterReturnedRowIsProcessed);
-        });
-    });
-}
-
-function printTableHeader(listOfColumnNames)
-{
-    let buffer = "| ";
-    for (const columnName of listOfColumnNames)
-    {
-        buffer += columnName + " | ";
-    }
-    console.log(buffer);
-    console.log("-".repeat(80));
-}
-
-// Add these functions to your db.js file
-function searchRecipesByTitle(searchTerm) {
-    return new Promise((resolve, reject) => {
-        const sql = `SELECT id, title, category, contributor, ingredients, instructions 
-                     FROM recipes 
-                     WHERE title LIKE ? 
-                     ORDER BY title;`;
-        const params = [`%${searchTerm}%`];
-
-        let listOfRecipes = [];
-
+        const results = [];
         db.each(sql, params, (err, row) => {
-            if (err) {
-                return reject(err);
-            }
-
-            const recipe = {
-                id: row.id,
-                title: row.title,
-                category: row.category,
-                contributor: row.contributor,
-                ingredients: row.ingredients,
-                instructions: row.instructions
-            };
-
-            listOfRecipes.push(recipe);
-        }, () => {
-            resolve(listOfRecipes);
-        });
+            if (err) return reject(err);
+            results.push(row);
+        }, () => resolve(results));
     });
 }
 
-function getRecipesByCategory(category) {
-    return new Promise((resolve, reject) => {
-        const sql = `SELECT id, title, category, contributor, ingredients, instructions 
-                     FROM recipes 
-                     WHERE category = ? 
-                     ORDER BY title;`;
-        const params = [category];
-
-        let listOfRecipes = [];
-
-        db.each(sql, params, (err, row) => {
-            if (err) {
-                return reject(err);
-            }
-
-            const recipe = {
-                id: row.id,
-                title: row.title,
-                category: row.category,
-                contributor: row.contributor,
-                ingredients: row.ingredients,
-                instructions: row.instructions
-            };
-
-            listOfRecipes.push(recipe);
-        }, () => {
-            resolve(listOfRecipes);
-        });
-    });
+async function getAllRecipes() {
+    const sql = `SELECT id, title, category, contributor, ingredients, instructions FROM recipes;`;
+    return await runQueryEach(sql);
 }
 
-function getAllCategories() {
-    return new Promise((resolve, reject) => {
-        const sql = `SELECT DISTINCT category FROM recipes ORDER BY category;`;
-
-        let categories = [];
-
-        db.each(sql, (err, row) => {
-            if (err) {
-                return reject(err);
-            }
-
-            categories.push(row.category);
-        }, () => {
-            resolve(categories);
-        });
-    });
+async function searchRecipesByTitle(searchTerm) {
+    const sql = `
+        SELECT id, title, category, contributor, ingredients, instructions
+        FROM recipes
+        WHERE title LIKE ?
+        ORDER BY title;
+    `;
+    return await runQueryEach(sql, [`%${searchTerm}%`]);
 }
 
+async function getRecipesByCategory(category) {
+    const sql = `
+        SELECT id, title, category, contributor, ingredients, instructions
+        FROM recipes
+        WHERE category = ?
+        ORDER BY title;
+    `;
+    return await runQueryEach(sql, [category]);
+}
 
-// TODO: export the functions that will be used in other files
+async function getAllCategoryNames() {
+    const sql = `SELECT DISTINCT category FROM recipes ORDER BY category;`;
+    const rows = await runQueryEach(sql);
+    return rows.map(row => row.category);
+}
+
 // these functions will be available from other files that import this module
 module.exports = {
     getAllRecipes,
-    getRecipeWithId,
     searchRecipesByTitle,
     getRecipesByCategory,
-    getAllCategories,
-
+    getAllCategoryNames,
 };

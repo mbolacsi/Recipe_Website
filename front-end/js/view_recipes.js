@@ -4,6 +4,7 @@ const div_list_of_recipes = document.getElementById("list_of_recipes");
 const searchInput = document.getElementById("search-input");
 const searchButton = document.getElementById("search-button");
 const categorySelect = document.getElementById("category-select");
+const recipeHeading = document.getElementById("recipe-heading");
 
 let allRecipes = [];
 
@@ -48,6 +49,7 @@ async function getAndDisplayAllRecipes() {
         if (response.ok) {
             const data = await response.json();
             allRecipes = data;
+            updateHeading();  // Set heading on first load
             displayRecipes(allRecipes);
         } else {
             div_list_of_recipes.innerHTML = '<p class="failure">ERROR: failed to retrieve the recipes.</p>';
@@ -77,6 +79,7 @@ function filterRecipes() {
         filtered = filtered.filter(recipe => recipe.category === selectedCategory);
     }
 
+    updateHeading(selectedCategory, searchTerm);
     displayRecipes(filtered);
 }
 
@@ -98,4 +101,15 @@ function displayRecipes(recipes) {
     });
 
     div_list_of_recipes.appendChild(ul);
+}
+
+// Update heading text based on filters
+function updateHeading(category = "", searchTerm = "") {
+    if (searchTerm) {
+        recipeHeading.textContent = `Search Results for "${searchTerm}"`;
+    } else if (category) {
+        recipeHeading.textContent = `${category}`;
+    } else {
+        recipeHeading.textContent = "All Recipes";
+    }
 }
