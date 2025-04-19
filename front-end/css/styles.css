@@ -144,14 +144,16 @@ main {
 
 /* Contributor badge */
 #contributor {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
     background-color: rgba(255, 255, 255, 0.1);
     color: #f0e6f5;
     padding: 10px;
     border-radius: 5px;
     z-index: 10;
+    font-size: 1rem;
+    text-align: center;
 }
 
 /* Recipes page alignment */
@@ -258,6 +260,7 @@ main {
     max-width: 800px;
     margin: 40px auto;
     padding: 30px;
+    padding-bottom: 70px; /* Add bottom space for contributor badge */
     background-color: darkcyan;
     background-image: url("https://www.transparenttextures.com/patterns/cartographer.png");
     border: 1px solid #bca9df;
