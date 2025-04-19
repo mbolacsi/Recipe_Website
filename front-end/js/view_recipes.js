@@ -96,6 +96,7 @@ function displayRecipes(recipes) {
 
     recipes.forEach(recipe => {
         const li = document.createElement("li");
+        li.style.marginBottom = "1.5rem";  // Additional spacing
         li.innerHTML = `<a href="recipe_detail.html?id=${recipe.id}">${recipe.title}</a>`;
         ul.appendChild(li);
     });
