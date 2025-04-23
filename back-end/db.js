@@ -125,6 +125,20 @@ async function getAllCategoryNames() {
     return rows.map(row => row.category);
 }
 
+async function addRecipe(recipe) {
+    const sql = `
+        INSERT INTO recipes (title, category, contributor, ingredients, instructions)
+        VALUES (?, ?, ?, ?, ?);
+    `;
+
+    return new Promise((resolve, reject) => {
+        db.run(sql, [recipe.title, recipe.category, recipe.contributor, recipe.ingredients, recipe.instructions], function(err) {
+            if (err) return reject(err);
+            resolve(this.lastID); // return the ID of the inserted row
+        });
+    });
+}
+
 // these functions will be available from other files that import this module
 module.exports = {
     getAllRecipes,
@@ -132,4 +146,5 @@ module.exports = {
     searchRecipesByTitle,
     getRecipesByCategory,
     getAllCategoryNames,
+    addRecipe,
 };
