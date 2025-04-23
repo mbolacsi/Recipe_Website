@@ -100,4 +100,42 @@ router.get("/recipe_detail/:id", async function (req, res) {
     }
 });
 
+/**
+ * POST /recipes
+ * Add a new recipe.
+ * Expects a JSON body with { title, category, contributor, ingredients, instructions }
+ */
+router.post("/recipes", async function (req, res) {
+    try {
+        const { title, category, contributor, ingredients, instructions } = req.body;
+
+        //validation
+        if (
+            !title ||
+            !category ||
+            !contributor ||
+            !ingredients ||
+            !instructions
+        ) {
+            return res
+                .status(400)
+                .json({ error: "Missing one or more required fields." });
+        }
+
+        const newId = await db.addRecipe({
+            title,
+            category,
+            contributor,
+            ingredients,
+            instructions,
+        });
+
+        // 201 Created, return the new row’s ID
+        res.status(201).json({ id: newId });
+    } catch (err) {
+        console.error("Error adding recipe:", err.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
 module.exports = router;
