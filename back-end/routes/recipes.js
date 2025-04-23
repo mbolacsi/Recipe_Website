@@ -134,4 +134,25 @@ router.post("/recipes", async function (req, res) {
     }
 });
 
+/**
+ * DELETE /recipes/:id
+ * Delete a recipe by ID.
+ */
+router.delete("/recipes/:id", async function (req, res) {
+    try {
+        const recipeId = req.params.id;
+
+        const wasDeleted = await db.deleteRecipeById(recipeId);
+
+        if (wasDeleted) {
+            res.status(200).json({ message: "Recipe deleted successfully" });
+        } else {
+            res.status(404).json({ error: "Recipe not found" });
+        }
+    } catch (err) {
+        console.error("Error deleting recipe:", err.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
 module.exports = router;
