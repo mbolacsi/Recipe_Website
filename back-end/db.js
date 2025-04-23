@@ -139,6 +139,17 @@ async function addRecipe(recipe) {
     });
 }
 
+async function deleteRecipeById(id) {
+    const sql = `DELETE FROM recipes WHERE id = ?;`;
+
+    return new Promise((resolve, reject) => {
+        db.run(sql, [id], function(err) {
+            if (err) return reject(err);
+            resolve(this.changes > 0); // returns true if a row was deleted, false otherwise
+        });
+    });
+}
+
 // these functions will be available from other files that import this module
 module.exports = {
     getAllRecipes,
@@ -147,4 +158,5 @@ module.exports = {
     getRecipesByCategory,
     getAllCategoryNames,
     addRecipe,
+    deleteRecipeById,
 };
