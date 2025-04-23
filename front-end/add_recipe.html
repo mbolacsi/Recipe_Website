@@ -28,7 +28,7 @@
             <div class="form-group">
                 <label for="category">Category:</label>
                 <select id="category" name="category" required>
-                    <option value="">Select a category</option>
+                    <option value="" disabled selected>Select a category</option>
                     <option value="Breakfast">Breakfast</option>
                     <option value="Main Course">Main Course</option>
                     <option value="Soup">Soup</option>
@@ -55,11 +55,12 @@
                 <button type="reset">Clear Form</button>
             </div>
         </form>
-        <div id="status-message"></div>
+        <div id="status-message" role="alert"></div>
     </section>
 </main>
 
-<script src="js/add_recipe.js"></script>
+<!-- Load the front-end JS after the DOM is parsed -->
+<script src="js/add_recipe.js" defer></script>
 </body>
 
 </html>

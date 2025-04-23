@@ -2,6 +2,7 @@ let express = require('express');
 let router = express.Router();
 const db = require("./../db");
 
+router.use(express.json());
 
 /**
  * http://localhost:8080/recipes
@@ -108,15 +109,10 @@ router.get("/recipe_detail/:id", async function (req, res) {
 router.post("/recipes", async function (req, res) {
     try {
         const { title, category, contributor, ingredients, instructions } = req.body;
+        console.log("Received recipe data:", req.body);
 
-        //validation
-        if (
-            !title ||
-            !category ||
-            !contributor ||
-            !ingredients ||
-            !instructions
-        ) {
+        // validation
+        if (!title || !category || !contributor || !ingredients || !instructions) {
             return res
                 .status(400)
                 .json({ error: "Missing one or more required fields." });

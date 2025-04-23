@@ -8,8 +8,6 @@ body {
     font-family: 'Quicksand', 'Helvetica Neue', 'Arial', sans-serif;
     font-size: 1rem;
     line-height: 1.6;
-    margin: 0;
-    padding: 0;
     text-align: center;
     transition: background-color 0.3s ease;
     position: relative;
@@ -142,8 +140,9 @@ main {
     margin-bottom: 15px;
 }
 
-/* Contributor badge */
-#contributor {
+/* Contributor badge – scoped fix */
+.recipe-card .contributor,
+#recipe_detail .contributor {
     position: absolute;
     bottom: 10px;
     right: 10px;
@@ -260,7 +259,7 @@ main {
     max-width: 800px;
     margin: 40px auto;
     padding: 30px;
-    padding-bottom: 70px; /* Add bottom space for contributor badge */
+    padding-bottom: 70px;
     background-color: darkcyan;
     background-image: url("https://www.transparenttextures.com/patterns/cartographer.png");
     border: 1px solid #bca9df;
@@ -310,14 +309,4 @@ main {
     color: #c5ffe1;
     font-size: 1.2rem;
     top: 0;
-}
-
-#recipe_detail .contributor {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    background-color: darkmagenta;
-    color: #e0dcef;
-    padding: 6px 12px;
-    border-radius: 5px;
 }
