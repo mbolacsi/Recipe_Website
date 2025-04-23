@@ -84,11 +84,24 @@ function runQueryEach(sql, params = []) {
     });
 }
 
+/**
+ * Retrieves all recipes from the database.
+ * This function selects all columns from the 'recipes' table.
+ *
+ * @returns {Promise<Array>} A Promise that resolves with an array of all recipes.
+ */
 async function getAllRecipes() {
     const sql = `SELECT id, title, category, contributor, ingredients, instructions FROM recipes;`;
     return await runQueryEach(sql);
 }
 
+/**
+ * Retrieves a recipe by its ID from the database.
+ * This function selects a recipe based on the provided ID.
+ *
+ * @param {number} id - The ID of the recipe to be retrieved.
+ * @returns {Promise<Object|null>} A Promise that resolves with the recipe object, or null if not found.
+ */
 async function getRecipeById(id) {
     const sql = `
         SELECT id, title, category, contributor, ingredients, instructions
@@ -99,6 +112,13 @@ async function getRecipeById(id) {
     return results[0]; // Return single recipe or undefined
 }
 
+/**
+ * Searches for recipes by their title.
+ * This function allows for a partial search, returning recipes whose title contains the search term.
+ *
+ * @param {string} searchTerm - The term to search for in the recipe title.
+ * @returns {Promise<Array>} A Promise that resolves with an array of matching recipes.
+ */
 async function searchRecipesByTitle(searchTerm) {
     const sql = `
         SELECT id, title, category, contributor, ingredients, instructions
@@ -109,6 +129,13 @@ async function searchRecipesByTitle(searchTerm) {
     return await runQueryEach(sql, [`%${searchTerm}%`]);
 }
 
+/**
+ * Retrieves all recipes from a specific category.
+ * This function selects recipes based on the provided category name.
+ *
+ * @param {string} category - The category of recipes to be retrieved.
+ * @returns {Promise<Array>} A Promise that resolves with an array of recipes in the specified category.
+ */
 async function getRecipesByCategory(category) {
     const sql = `
         SELECT id, title, category, contributor, ingredients, instructions
@@ -119,12 +146,30 @@ async function getRecipesByCategory(category) {
     return await runQueryEach(sql, [category]);
 }
 
+/**
+ * Retrieves the distinct categories of recipes.
+ * This function returns a list of all unique recipe categories, ordered alphabetically.
+ *
+ * @returns {Promise<Array>} A Promise that resolves with an array of category names.
+ */
 async function getAllCategoryNames() {
     const sql = `SELECT DISTINCT category FROM recipes ORDER BY category;`;
     const rows = await runQueryEach(sql);
     return rows.map(row => row.category);
 }
 
+/**
+ * Adds a new recipe to the database.
+ * This function inserts a new recipe into the 'recipes' table.
+ *
+ * @param {Object} recipe - The recipe to be added.
+ * @param {string} recipe.title - The title of the recipe.
+ * @param {string} recipe.category - The category of the recipe.
+ * @param {string} recipe.contributor - The contributor of the recipe.
+ * @param {string} recipe.ingredients - The ingredients of the recipe.
+ * @param {string} recipe.instructions - The instructions for the recipe.
+ * @returns {Promise<number>} A Promise that resolves with the ID of the newly inserted recipe.
+ */
 async function addRecipe(recipe) {
     const sql = `
         INSERT INTO recipes (title, category, contributor, ingredients, instructions)
@@ -139,6 +184,14 @@ async function addRecipe(recipe) {
     });
 }
 
+
+/**
+ * Deletes a recipe by its ID.
+ * This function removes the recipe from the 'recipes' table based on the provided ID.
+ *
+ * @param {number} id - The ID of the recipe to be deleted.
+ * @returns {Promise<boolean>} A Promise that resolves with true if a row was deleted, false otherwise.
+ */
 async function deleteRecipeById(id) {
     const sql = `DELETE FROM recipes WHERE id = ?;`;
 
