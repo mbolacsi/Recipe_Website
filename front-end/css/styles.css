@@ -253,6 +253,30 @@ main {
     gap: 20px;
 }
 
+.delete-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem; /* optional spacing from above content */
+}
+
+.delete-button button {
+    background-color: #e74c3c;
+    color: white;
+    padding: 0.5rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.delete-button button:hover {
+    background-color: #c0392b;
+    transform: translateY(-1px);
+}
+
+
 /* Recipe detail page styling */
 #recipe_detail {
     position: relative;

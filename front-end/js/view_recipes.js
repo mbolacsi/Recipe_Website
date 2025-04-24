@@ -5,8 +5,11 @@ const searchInput = document.getElementById("search-input");
 const searchButton = document.getElementById("search-button");
 const categorySelect = document.getElementById("category-select");
 const recipeHeading = document.getElementById("recipe-heading");
+const deleteModeButton = document.getElementById("delete-mode-button"); // The delete mode button
 
 let allRecipes = [];
+let isDeleteModeActive = false;
+let selectedRecipeId = null;
 
 // On page load
 document.addEventListener("DOMContentLoaded", () => {
@@ -19,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.key === "Enter") filterRecipes();
     });
     categorySelect.addEventListener("change", filterRecipes);
+    deleteModeButton.addEventListener("click", toggleDeleteMode); // Toggle delete mode
 });
 
 // Load all categories into dropdown
@@ -83,7 +87,6 @@ function filterRecipes() {
     displayRecipes(filtered);
 }
 
-// Display recipe list
 function displayRecipes(recipes) {
     div_list_of_recipes.innerHTML = "";
 
@@ -96,8 +99,24 @@ function displayRecipes(recipes) {
 
     recipes.forEach(recipe => {
         const li = document.createElement("li");
-        li.style.marginBottom = "1.5rem";  // Additional spacing
-        li.innerHTML = `<a href="recipe_detail.html?id=${recipe.id}">${recipe.title}</a>`;
+        li.style.marginBottom = "1.5rem";
+        li.setAttribute('data-id', recipe.id); // Store the recipe id in a data attribute
+
+        const link = document.createElement("a");
+        link.textContent = recipe.title;
+
+        if (isDeleteModeActive) {
+            li.classList.add('delete-selectable');
+            li.addEventListener("click", (e) => {
+                e.preventDefault();
+                selectRecipeForDeletion(recipe.id);
+            });
+        } else {
+            // In normal mode, allow the link to work
+            link.href = `recipe_detail.html?id=${recipe.id}`;
+        }
+
+        li.appendChild(link);
         ul.appendChild(li);
     });
 
@@ -113,4 +132,52 @@ function updateHeading(category = "", searchTerm = "") {
     } else {
         recipeHeading.textContent = "All Recipes";
     }
+}
+
+
+function toggleDeleteMode() {
+    isDeleteModeActive = !isDeleteModeActive;
+    deleteModeButton.textContent = isDeleteModeActive ? "Cancel Delete Mode" : "Activate Delete Mode";
+    displayRecipes(allRecipes);
+}
+
+function selectRecipeForDeletion(recipeId) {
+    selectedRecipeId = recipeId;
+    const selectedRecipe = document.querySelector(`[data-id="${recipeId}"]`);
+    selectedRecipe.classList.toggle('selected-for-deletion');
+
+    if (selectedRecipe.classList.contains('selected-for-deletion')) {
+        // If selected, ask for confirmation to delete
+        const confirmDelete = confirm("Are you sure you want to delete this recipe?");
+        if (confirmDelete) {
+            deleteRecipe(recipeId); // Proceed with delete action
+        } else {
+            selectedRecipe.classList.remove('selected-for-deletion');
+        }
+    } else {
+        selectedRecipe.classList.remove('selected-for-deletion');
+    }
+}
+
+
+async function deleteRecipe(recipeId) {
+    const API_URL = `http://localhost:8080/recipes/${recipeId}`;
+
+    fetch(API_URL, {
+        method: "DELETE",
+    })
+        .then(response => {
+            if (response.ok) {
+                alert('Recipe deleted successfully!');
+                isDeleteModeActive = false;
+                deleteModeButton.textContent = "Activate Delete Mode";
+                getAndDisplayAllRecipes();
+            } else {
+                alert('Failed to delete the recipe. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error("Error deleting recipe:", error);
+            alert('Failed to delete the recipe. Please try again.');
+        });
 }

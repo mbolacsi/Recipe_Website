@@ -134,10 +134,6 @@ router.post("/recipes", async function (req, res) {
     }
 });
 
-/**
- * DELETE /recipes/:id
- * Delete a recipe by ID.
- */
 router.delete("/recipes/:id", async function (req, res) {
     try {
         const recipeId = req.params.id;
