@@ -105,11 +105,12 @@ function displayRecipes(recipes) {
         const link = document.createElement("a");
         link.textContent = recipe.title;
 
+        // If delete mode is active, allow selection of the recipe for deletion
         if (isDeleteModeActive) {
             li.classList.add('delete-selectable');
             li.addEventListener("click", (e) => {
-                e.preventDefault();
-                selectRecipeForDeletion(recipe.id);
+                e.preventDefault();  // Prevent the link from navigating
+                selectRecipeForDeletion(recipe.id);  // Proceed with delete action
             });
         } else {
             // In normal mode, allow the link to work
@@ -134,17 +135,18 @@ function updateHeading(category = "", searchTerm = "") {
     }
 }
 
-
+// Toggle Delete Mode
 function toggleDeleteMode() {
     isDeleteModeActive = !isDeleteModeActive;
     deleteModeButton.textContent = isDeleteModeActive ? "Cancel Delete Mode" : "Activate Delete Mode";
-    displayRecipes(allRecipes);
+    displayRecipes(allRecipes); // Re-render the recipe list with updated delete mode state
 }
 
+// Select recipe for deletion
 function selectRecipeForDeletion(recipeId) {
     selectedRecipeId = recipeId;
     const selectedRecipe = document.querySelector(`[data-id="${recipeId}"]`);
-    selectedRecipe.classList.toggle('selected-for-deletion');
+    selectedRecipe.classList.toggle('selected-for-deletion'); // Highlight the selected recipe
 
     if (selectedRecipe.classList.contains('selected-for-deletion')) {
         // If selected, ask for confirmation to delete
@@ -152,14 +154,14 @@ function selectRecipeForDeletion(recipeId) {
         if (confirmDelete) {
             deleteRecipe(recipeId); // Proceed with delete action
         } else {
-            selectedRecipe.classList.remove('selected-for-deletion');
+            selectedRecipe.classList.remove('selected-for-deletion'); // Cancel deletion
         }
     } else {
         selectedRecipe.classList.remove('selected-for-deletion');
     }
 }
 
-
+// DELETE recipe
 async function deleteRecipe(recipeId) {
     const API_URL = `http://localhost:8080/recipes/${recipeId}`;
 
@@ -169,9 +171,9 @@ async function deleteRecipe(recipeId) {
         .then(response => {
             if (response.ok) {
                 alert('Recipe deleted successfully!');
-                isDeleteModeActive = false;
-                deleteModeButton.textContent = "Activate Delete Mode";
-                getAndDisplayAllRecipes();
+                isDeleteModeActive = false; // Exit delete mode after deletion
+                deleteModeButton.textContent = "Activate Delete Mode"; // Reset button text
+                getAndDisplayAllRecipes();  // Refresh the list
             } else {
                 alert('Failed to delete the recipe. Please try again.');
             }
